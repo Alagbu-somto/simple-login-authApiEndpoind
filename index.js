@@ -35,19 +35,9 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
-app.get("/login", function (req, res) {
-  console.log("here");
-  res.render("login");
-});
 app.get("/logout", function (req, res) {
   req.logout;
   res.redirect("/");
-});
-app.get("/forgotpassword", (req, res) => {
-  res.render("forgotpassword");
-});
-app.get("/register", function (req, res) {
-  res.render("register");
 });
 
 app.get("/secrets", function (req, res) {
