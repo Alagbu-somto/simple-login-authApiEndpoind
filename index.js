@@ -6,6 +6,7 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const cors = require("cors");
 const controllers = require("./controller/controllers");
@@ -29,11 +30,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/LoginDB");
+// mongoose.connect("mongodb://localhost:27017/LoginDB");
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+mongoose.connect(
+  "mongodb+srv://Stephen:Testing@cluster0.m8xs9.mongodb.net/ListDB"
+);
 
 app.get("/logout", function (req, res) {
   req.logout;

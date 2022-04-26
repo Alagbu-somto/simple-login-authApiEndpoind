@@ -1,8 +1,9 @@
 const Login = require("../model/userShema");
 const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const login_post = (req, res) => {
-  console.log(req.body.username);
+  console.log(req.body.email);
   const user = new Login({
     username: req.body.username,
     password: req.body.password,
@@ -20,21 +21,25 @@ const login_post = (req, res) => {
   });
 };
 
-const register_post = async (req, res) => {
-  await Login.register(
-    { username: req.body.email },
-    req.body.password,
-    (err, user) => {
-      if (err) {
-        console.log(err);
-        res.json({ status: 400, message: "unsucessful", error: err });
-      } else {
-        passport.authenticate("local")(req, res, function () {
-          res.json({ status: 200, message: "sucessful" });
-        });
+const register_post = async (req, res, next) => {
+  try {
+    await Login.register(
+      { username: req.body.username },
+      req.body.password,
+      (err, user) => {
+        if (err) {
+          console.log(err);
+          res.json({ status: 400, message: "unsucessful", error: err });
+        } else {
+          passport.authenticate("local")(req, res, function () {
+            res.json({ status: 200, message: "sucessful" });
+          });
+        }
       }
-    }
-  );
+    );
+  } catch (e) {
+    res.json({ status: "error", error: e });
+  }
 };
 const forgetpssword_post = (req, res) => {
   const username = req.body.username;
