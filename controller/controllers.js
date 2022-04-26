@@ -14,7 +14,6 @@ const login_post = (req, res) => {
       passport.authenticate("local", {
         failureMessage: true,
       })(req, res, () => {
-        // res.redirect("/secrets");
         res.json({ status: 200, message: "sucessful" });
       });
     }
@@ -28,11 +27,9 @@ const register_post = async (req, res) => {
     (err, user) => {
       if (err) {
         console.log(err);
-        // res.redirect("/register");
         res.json({ status: 400, message: "unsucessful", error: err });
       } else {
         passport.authenticate("local")(req, res, function () {
-          // res.redirect("/secrets");
           res.json({ status: 200, message: "sucessful" });
         });
       }
@@ -51,7 +48,6 @@ const forgetpssword_post = (req, res) => {
         } else {
           founduser.save();
           console.log("successful");
-          // res.redirect("/login");
           res.json({ status: 200, message: "sucessful" });
         }
       });
